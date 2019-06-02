@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.post('/', (req, res) => {
-
+    let payload = req.body;
     if(payload.event.type === "app_mention"){
         if(payload.event.text.includes("test")){
             var data = {form: {
