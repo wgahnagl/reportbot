@@ -28,6 +28,12 @@ app.post('/', (req, res) => {
                     text: "testing"
                 }};
         }
+    }else{
+        var data = {form: {
+                token: process.env.SLACK_AUTH_TOKEN,
+                channel: "reportbot-development",
+                text: "it's reportbot"
+            }};
     }
     
     request.post('https://slack.com/api/chat.postMessage', data, function (error, response, body) {
