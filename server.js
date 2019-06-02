@@ -21,13 +21,24 @@ app.use(bodyParser.json());
 app.post('/', (req, res) => {
     let payload = req.body;
 
-    var data = {form: {
-            token: process.env.SLACK_AUTH_TOKEN,
-            channel: "reportbot-development",
-            text: "it's reportbot"
-        }};
+    if(payload["challenge"] !== ""){
+        res.send(payload["challenge"])
+    }
+    if(payload.event.type === "app_mention"){
+        var data = {form: {
+                token: process.env.SLACK_AUTH_TOKEN,
+                channel: "reportbot-development",
+                text: "what's good"
+            }};
+    }else{
+        var data = {form: {
+                token: process.env.SLACK_AUTH_TOKEN,
+                channel: "reportbot-development",
+                text: "it's reportbot"
+            }};
+    }
 
-    
+
     request.post('https://slack.com/api/chat.postMessage', data, function (error, response, body) {
         // Sends welcome message
         res.json();
