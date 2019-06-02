@@ -1,19 +1,37 @@
 require('dotenv').config();
-var Botkit = require('botkit');
 
-var controller = Botkit.slackbot({
-    debug: false
+const express = require('express');
+const bodyParser = require('body-parser');
+const request = require("request");
+
+// Creates express app
+const app = express();
+
+// The port used for Express server
+const PORT = 3000;
+
+// Starts server
+app.listen(process.env.PORT || PORT, function() {
+    console.log('Bot is listening on port ' + PORT);
 });
 
-controller.spawn({
-    token: process.env.SLACK_AUTH_TOKEN,
-    // your API key here
-}).startRTM(function (err) {
-    if (err) {
-        throw new Error(err);
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
+app.post('/', (req, res) => {
+
+    if(payload.event.type === "app_mention"){
+        if(payload.event.text.includes("test")){
+            var data = {form: {
+                    token: process.env.SLACK_AUTH_TOKEN,
+                    channel: "reportbot-development",
+                    text: "testing"
+                }};
+        }
     }
-});
-
-controller.hears(['hello', 'hi'], ['direct_mention'], function (bot, message) {
-    bot.reply(message, "Hello.");
+    
+    request.post('https://slack.com/api/chat.postMessage', data, function (error, response, body) {
+        // Sends welcome message
+        res.json();
+    });
 });
