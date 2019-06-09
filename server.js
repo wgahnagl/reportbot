@@ -21,19 +21,22 @@ app.use(bodyParser.json());
 app.post('/', (req, res) => {
     let payload = req.body;
 
+    console.log(payload);
+
     if(payload["challenge"] !== ""){
         res.send(payload["challenge"])
     }
+
     if(payload.event.type === "app_mention"){
         var data = {form: {
                 token: process.env.SLACK_AUTH_TOKEN,
-                channel: "reportbot-development",
+                channel: "reportbot-botspam",
                 text: "what's good"
             }};
     }else{
         var data = {form: {
                 token: process.env.SLACK_AUTH_TOKEN,
-                channel: "reportbot-development",
+                channel: "reportbot-botspam",
                 text: "it's reportbot"
             }};
     }
